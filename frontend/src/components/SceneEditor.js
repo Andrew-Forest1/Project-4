@@ -20,10 +20,22 @@ function SceneEditor({scene}){
           height: 500
         }
     }
-    // const gameObjects = scene.game_objects.map(gameObject => {
-    //     return new GameObject({x: gameObject.x_pos, y: gameObject.y_pos}, gameObject.rotation, {w: gameObject.w_scale, h: gameObject.h_scale}, gameObject.shape)
-    // })
-    // setGameObjects(gameObjects)
+
+    console.log(window.location.pathname)
+
+    useEffect(() => {
+        fetch(`http://localhost:3000${window.location.pathname}`)
+        .then(resp => resp.json())
+        .then(data => getGameObjects(data.game_objects))//console.log(data))//setPost(data))
+        //console.log("fetching scenes")
+    }, []);
+
+    const getGameObjects = (gameObjects) => {
+        const newGameObjects = gameObjects.map(gameObject => {
+            return new GameObject({x: gameObject.x_pos, y: gameObject.y_pos}, gameObject.rotation, {w: gameObject.w_scale, h: gameObject.h_scale}, gameObject.shape, "")
+        })
+        setGameObjects(newGameObjects)
+    }
 
     return (
         <div className='editor'>
