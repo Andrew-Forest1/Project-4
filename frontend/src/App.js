@@ -1,6 +1,6 @@
 import './App.css';
 import GameObject from './Scripts/GameObject';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cloud from './cloud_shape1_1.png'
 import UploadSprite from './components/UploadSprite';
 import { Routes, Route } from "react-router-dom";
@@ -27,6 +27,12 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    fetch("http://localhost:3000/scenes")
+    .then(resp => resp.json())
+    .then(data => setScenes(data))//setPost(data))
+    }, []);
+
   const editGameObject = (updates) => {
     selectedGO = updates
   }
@@ -37,8 +43,9 @@ function App() {
     <div className="App">
       {!user ?
         <Routes>
-          <Route path="/login" element={<SceneEditor gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGO={setSelectedGO} canvasProps={canvasProps} play={play} setPlay={setPlay} playableObjects={playableObjects} setPlayableObjects={setPlayableObjects} sprites={sprites}/>}/>
+          <Route path="/scenes/*" element={<SceneEditor gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGO={setSelectedGO} canvasProps={canvasProps} play={play} setPlay={setPlay} playableObjects={playableObjects} setPlayableObjects={setPlayableObjects} sprites={sprites}/>}/>
           <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes}/>}/>
+          <Route path="/*" element={<SceneEditor gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGO={setSelectedGO} canvasProps={canvasProps} play={play} setPlay={setPlay} playableObjects={playableObjects} setPlayableObjects={setPlayableObjects} sprites={sprites}/>}/>
         </Routes>
       :
         <Routes>
