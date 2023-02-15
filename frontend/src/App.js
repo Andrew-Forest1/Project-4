@@ -1,24 +1,24 @@
 import './App.css';
 import GameObject from './Scripts/GameObject';
-import Canvas from './components/Canvas'
 import React, { useState } from 'react';
-import Inspector from './components/Inspector';
-import NewGameObjectForm from './components/NewGameObjectForm';
-import PlayButton from './components/PlayButton';
-import PlayButtonTest from './components/PlayButtonTest';
-import CreateComponent from './components/CreateComponent';
-import ScriptEditor from './components/ScriptEditor';
 import cloud from './cloud_shape1_1.png'
 import UploadSprite from './components/UploadSprite';
+import { Routes, Route } from "react-router-dom";
+import SignUp from './components/Signup'
+import Login from './components/Login';
+import SceneEditor from './components/SceneEditor';
+import Scenes from './components/Scenes'
 
 function App() {
+  const [user, setUser] = useState(JSON.parse(window.localStorage.getItem("user")));  
+  const [message, setMessage] = useState(null);
+  const [page, setPage] = useState('/login');
   const [gameObjects, setGameObjects] = useState([]);
   const [playableObjects, setPlayableObjects] = useState([]);
   const [selectedGO, setSelectedGO] = useState(null);
   const [play, setPlay] = useState(false);
-  const [components, setComponents] = useState([]);
-  const [showCanvas, setShowCanvas] = useState(true);
   const [sprites, setSprites] = useState([cloud]);
+  const [scenes, setScenes] = useState([]);
 
   const canvasProps = {
     options: {
@@ -35,20 +35,21 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={() => setShowCanvas(!showCanvas)}>Edit</button>
-      {showCanvas ?
-        <div className='editor'>
-          <NewGameObjectForm setGameObjects={setGameObjects}/>
-          <Canvas props={canvasProps} gameObjects={gameObjects} setGameObjects={setGameObjects} setSelectedGameObject={setSelectedGO} play={play} playableObjects={playableObjects}/>
-          <PlayButton gameObjects={gameObjects} play={play} setPlay={setPlay} setPlayableObjects={setPlayableObjects}/>
-          {selectedGO ? <Inspector gameObject={selectedGO} setGameObject={setSelectedGO} components={components} sprites={sprites}/> : null}
-        </div> :
-        <ScriptEditor setComponents={setComponents}/>
+      {!user ?
+        <Routes>
+          <Route path="/login" element={<SceneEditor gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGO={setSelectedGO} canvasProps={canvasProps} play={play} setPlay={setPlay} playableObjects={playableObjects} setPlayableObjects={setPlayableObjects} sprites={sprites}/>}/>
+          <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes}/>}/>
+        </Routes>
+      :
+        <Routes>
+              <Route path="/login" element={<Login setUser={setUser} setMessage={setMessage} setPage={setPage}/>}/>
+              <Route path="/signup" element={<SignUp setPage={setPage}/>}/>
+              <Route path="*" element={<Login setUser={setUser} setMessage={setMessage} setPage={setPage}/>}/>
+        </Routes>
       }
       <br/>
-      <CreateComponent setComponents={setComponents}/>
-      <br/>
       <UploadSprite/>
+
     </div>
   );
 }

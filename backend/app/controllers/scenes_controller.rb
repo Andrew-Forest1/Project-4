@@ -26,7 +26,7 @@ class ScenesController < ApplicationController
     end
 
     def scene_params
-        params.permit(:name)
+        params.permit(:name, :user_id)
     end
 
 end

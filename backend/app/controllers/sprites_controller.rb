@@ -1,5 +1,5 @@
 class SpritesController < ApplicationController
-    before_action :find_sprite, only: [:show]
+    before_action :find_sprite, only: [:show, :destroy]
 
     def create
         sprite = Sprite.create!(sprite_params)
@@ -12,6 +12,11 @@ class SpritesController < ApplicationController
 
     def index
         render json: Sprite.all, status: :ok
+    end
+
+    def destroy 
+        @sprite.destroy
+        render json: {}, status: :gone
     end
 
     private
