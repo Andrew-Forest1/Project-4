@@ -6,7 +6,7 @@ class ScenesController < ApplicationController
     end
 
     def show
-        render json: @scene, status: :ok
+        render json: @scene.game_objects, status: :ok
     end
 
     def create
@@ -29,4 +29,7 @@ class ScenesController < ApplicationController
         params.permit(:name, :user_id)
     end
 
+    # def single_scene
+    #     {id: @scene.id, name: @scene.name, user: @scene.user, game_objects: @scene.game_objects}
+    # end
 end

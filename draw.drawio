@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="T8C3bZ8Fw9OgXHhQJTOG" name="Page-1">
-        <mxGraphModel dx="1083" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1083" dy="586" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -16,7 +16,7 @@
                     <mxGeometry y="50" width="200" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="5" value="Scene" style="swimlane;whiteSpace=wrap;html=1;startSize=23;" parent="1" vertex="1" collapsed="1">
-                    <mxGeometry x="330" y="230" width="80" height="40" as="geometry">
+                    <mxGeometry x="350" y="230" width="80" height="40" as="geometry">
                         <mxRectangle x="250" y="190" width="240" height="245" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -27,7 +27,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="11" value="Users" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-                    <mxGeometry x="335" y="140" width="70" height="30" as="geometry">
+                    <mxGeometry x="355" y="140" width="70" height="30" as="geometry">
                         <mxRectangle x="200" y="210" width="200" height="200" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>

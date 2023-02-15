@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddSprite({gameObject, setGameObject, sprites}){
+function AddSprite({gameObject, setSelectedGO, sprites}){
     const [open, setOpen] = useState(false);
     const [components, setComponents] = useState(gameObject.components);
 
@@ -10,32 +10,32 @@ function AddSprite({gameObject, setGameObject, sprites}){
 
     const handleClick = (e) => {
         const img = new Image(gameObject.scale.x * 10, gameObject.scale.y * 10)
-        img.src = sprites[0]
+        const s = sprites.find(sprite => sprite.id == e.target.name)
+        img.src = s.image_url
+        img.name = s.name
         gameObject.sprite = img
-        setGameObject({...gameObject})
+        setSelectedGO({...gameObject})
         setOpen(!open);
-        console.log(gameObject)
+        fetch('http://localhost:3000/game_object_sprites', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({game_object_id: gameObject.id, sprite_id: s.id})
+        })
     }
-
-    const displayComponents = components.map(component => {
-        return (
-            <div key={`Component-${component}`}>
-                <label>{component}</label>
-            </div>
-        )})
 
     const displayDropDown = sprites.map(script => {
         return(
             <li className="menu-item">
-                <button onClick={handleClick} name={script.name}>{script.name}</button>
+                <button onClick={handleClick} name={script.id}>{script.name}</button>
             </li>
         )
     })
 
     return (
         <div className="dropdown">
-            {displayComponents}
-            <button onClick={handleOpen}>Dropdown</button>
+            <button onClick={handleOpen}>{gameObject.sprite === "" ? "Add Sprite" : gameObject.sprite.name}</button>
             {open ? (
                 <ul className="menu">
                     {displayDropDown}

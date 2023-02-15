@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddComponent({gameObject, setGameObject, scripts}){
+function AddComponent({gameObject, setSelectedGO, scripts}){
     const [open, setOpen] = useState(false);
     const [components, setComponents] = useState(gameObject.components);
 
@@ -22,7 +22,7 @@ function AddComponent({gameObject, setGameObject, scripts}){
             //setComponents(current => [...current, './ComponentTest2.js'])
             gameObject.components.push('Controller.js')
         }
-        setGameObject({...gameObject})
+        setSelectedGO({...gameObject})
         setOpen(!open);
     }
 

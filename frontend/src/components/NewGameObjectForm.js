@@ -31,7 +31,32 @@ function NewGameObjectForm({setGameObjects}){
             shape: newGameObject.shape
         }
 
-        setGameObjects(current => [...current, new GameObject({x: newGameObject.xposition, y: newGameObject.yposition}, newGameObject.rotation, {w: newGameObject.xscale, h: newGameObject.yscale}, newGameObject.shape, "")])
+        fetch('http://localhost:3000/game_objects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(newGO)
+        })
+        .then(resp => {
+            if (resp.status === 201) {
+                resp.json()
+                .then(GO => {
+                    setGameObjects(current => [...current, new GameObject({x: newGameObject.xposition, y: newGameObject.yposition}, newGameObject.rotation, {w: newGameObject.xscale, h: newGameObject.yscale}, newGameObject.shape, "", GO.id)])
+                    setNewGameObject({
+                        xposition: 100,
+                        yposition: 100,
+                        rotation: 0,
+                        xscale: 5,
+                        yscale: 5,
+                        shape: 'circle'
+                    })
+                })
+            } else {
+                resp.json()
+                .then(msg => alert(msg))
+            }
+        })
     }
 
     return(

@@ -3,7 +3,7 @@ import AddComponent from "./AddComponent";
 import AddComponentTest from "./AddComponentTest";
 import AddSprite from "./AddSprite";
 
-function Inspector({gameObject, setGameObject, components, sprites}){
+function Inspector({gameObject, setSelectedGO, setGameObjects, components, sprites}){
     const [updatedGO, setUpdatedGO] = useState(gameObject);
     const [editing, setEditing] = useState("");
 
@@ -44,7 +44,37 @@ function Inspector({gameObject, setGameObject, components, sprites}){
                 break;
         }
         console.log(gameObject)
+
+        const newGO = {
+            x_pos: gameObject.globalPosition.x,
+            y_pos: gameObject.globalPosition.y,
+            rotation: gameObject.rotation,
+            w_scale: gameObject.scale.w, 
+            h_scale: gameObject.scale.h, 
+            shape: gameObject.shape
+        }
+
+        fetch(`http://localhost:3000/game_objects/${gameObject.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(newGO)
+        })
+
+
         setEditing("")
+    }
+    
+    const handleClick = () => {
+        fetch(`http://localhost:3000/game_objects/${gameObject.id}`, {
+            method: 'DELETE'
+        })
+        setSelectedGO(null)
+        setGameObjects(current => {
+            const sceneId = current.findIndex(ele => ele.id === gameObject.id)
+            return [...current.slice(0, sceneId), ...current.slice(sceneId + 1)]
+        })
     }
 
     const createNewComponent = () => {
@@ -74,8 +104,9 @@ function Inspector({gameObject, setGameObject, components, sprites}){
                 <input onBlur={handleLeave} onChange={handleChange} value={editing.yscale === undefined ? gameObject.scale.h : editing.yscale} type="number" name="yscale"/>
             </div>
             <br/>
-            {gameObject ? <AddComponent gameObject={gameObject} setGameObject={setGameObject} scripts={components}/> : null}
-            {gameObject ? <AddSprite gameObject={gameObject} setGameObject={setGameObject} sprites={sprites}/> : null}
+            {gameObject ? <AddComponent gameObject={gameObject} setSelectedGO={setSelectedGO} scripts={components}/> : null}
+            {gameObject ? <AddSprite gameObject={gameObject} setSelectedGO={setSelectedGO} sprites={sprites}/> : null}
+            <button onClick={handleClick}>Delete Game Object</button>
         </div>
     )
 }

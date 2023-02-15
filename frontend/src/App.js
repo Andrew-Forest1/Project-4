@@ -6,6 +6,7 @@ import SignUp from './components/Signup'
 import Login from './components/Login';
 import SceneEditor from './components/SceneEditor';
 import Scenes from './components/Scenes'
+import Sprites from './components/Sprites';
 
 function App() {
   const [user, setUser] = useState(JSON.parse(window.localStorage.getItem("user")));  
@@ -27,7 +28,7 @@ function App() {
     <div className="App">
       {!user ?
         <Routes>
-          <Route path="/scenes/*" element={<SceneEditor />}/>
+          <Route path="/scenes/*" element={<SceneEditor user={user}/>}/>
           <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes}/>}/>
           {/* <Route path="/*" element={<SceneEditor gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGO={setSelectedGO} canvasProps={canvasProps} play={play} setPlay={setPlay} playableObjects={playableObjects} setPlayableObjects={setPlayableObjects} sprites={sprites}/>}/> */}
         </Routes>
@@ -40,7 +41,7 @@ function App() {
       }
       <br/>
       <UploadSprite/>
-
+      <Sprites/>
     </div>
   );
 }

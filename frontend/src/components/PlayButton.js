@@ -48,7 +48,7 @@ function PlayButton({gameObjects, play, setPlay, setPlayableObjects}){
         }
     }
 
-    return <button onClick={handleClick}>Play</button>
+    return <button onClick={handleClick}>{play ? "Stop" : "Play"}</button>
 }
 
 export default PlayButton

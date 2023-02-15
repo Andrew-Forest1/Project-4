@@ -1,5 +1,5 @@
 class GameObject{
-    constructor(position, rotation, scale, shape, sprite){
+    constructor(position, rotation, scale, shape, sprite, id){
         this.localPosition = position
         this.globalPosition = position
         this.localRotation = rotation
@@ -9,7 +9,8 @@ class GameObject{
         this.components = []
         this.sprite = sprite
         this.shape = shape
-        console.log(this)
+        this.id = id
+        //console.log(this)
     }
 
     selectGameObject(mousePosition) {
