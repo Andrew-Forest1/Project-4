@@ -1,6 +1,8 @@
+import GameObject from "../Scripts/GameObject"
+
 function Scene({scene, setScenes}){
     const onClickEdit = (e) => {
-
+        window.location.href = `http://localhost:3001/scenes/${scene.id}`
     }
 
     const onClickDelete = (e) => {
