@@ -1,7 +1,9 @@
 import { useState } from "react"
 import AddComponent from "./AddComponent";
+import AddComponentTest from "./AddComponentTest";
+import AddSprite from "./AddSprite";
 
-function Inspector({gameObject, setGameObject}){
+function Inspector({gameObject, setGameObject, components, sprites}){
     const [updatedGO, setUpdatedGO] = useState(gameObject);
     const [editing, setEditing] = useState("");
 
@@ -72,7 +74,8 @@ function Inspector({gameObject, setGameObject}){
                 <input onBlur={handleLeave} onChange={handleChange} value={editing.yscale === undefined ? gameObject.scale.h : editing.yscale} type="number" name="yscale"/>
             </div>
             <br/>
-            {gameObject ? <AddComponent gameObject={gameObject} setGameObject={setGameObject}/> : null}
+            {gameObject ? <AddComponent gameObject={gameObject} setGameObject={setGameObject} scripts={components}/> : null}
+            {gameObject ? <AddSprite gameObject={gameObject} setGameObject={setGameObject} sprites={sprites}/> : null}
         </div>
     )
 }

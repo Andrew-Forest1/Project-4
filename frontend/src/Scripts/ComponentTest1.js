@@ -18,7 +18,9 @@ export function assign(parent){
 }
 
 export function Component(gameObject){
-    return new Component1(JSON.parse(JSON.stringify(gameObject)))
+    const deepCopy = JSON.parse(JSON.stringify(gameObject))
+    deepCopy.sprite = gameObject.sprite
+    return new Component1(deepCopy)
 }
 
 export function Shallow(gameObject){
@@ -27,7 +29,7 @@ export function Shallow(gameObject){
 
 class Component1 extends GameObject{
     constructor(gameObject){
-        super(gameObject.globalPosition, gameObject.globalRotation, gameObject.scale, gameObject.shape)
+        super(gameObject.globalPosition, gameObject.globalRotation, gameObject.scale, gameObject.shape, gameObject.sprite)
         this.prop1 = "Component 1 prop"
         this.count = 0
         this.nextObject = false

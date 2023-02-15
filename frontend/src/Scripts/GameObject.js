@@ -1,5 +1,5 @@
 class GameObject{
-    constructor(position, rotation, scale, shape){
+    constructor(position, rotation, scale, shape, sprite){
         this.localPosition = position
         this.globalPosition = position
         this.localRotation = rotation
@@ -7,6 +7,7 @@ class GameObject{
         this.scale = scale
         this.selected = false
         this.components = []
+        this.sprite = sprite
         this.shape = shape
         console.log(this)
     }

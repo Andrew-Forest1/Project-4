@@ -1,0 +1,2 @@
+class GameObjectsController < ApplicationController
+end

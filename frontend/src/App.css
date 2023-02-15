@@ -17,6 +17,11 @@
 
 .App{
   display: flex;
+  flex-direction: column;
+}
+
+.editor{
+  display: flex;
 }
 
 .dropdown {

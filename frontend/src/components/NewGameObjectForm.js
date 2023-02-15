@@ -21,7 +21,7 @@ function NewGameObjectForm({setGameObjects}){
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setGameObjects(current => [...current, new GameObject({x: newGameObject.xposition, y: newGameObject.yposition}, newGameObject.rotation, {w: newGameObject.xscale, h: newGameObject.yscale}, newGameObject.shape)])
+        setGameObjects(current => [...current, new GameObject({x: newGameObject.xposition, y: newGameObject.yposition}, newGameObject.rotation, {w: newGameObject.xscale, h: newGameObject.yscale}, newGameObject.shape, "")])
     }
 
     return(

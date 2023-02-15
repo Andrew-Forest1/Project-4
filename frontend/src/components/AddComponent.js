@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddComponent({gameObject, setGameObject}){
+function AddComponent({gameObject, setGameObject, scripts}){
     const [open, setOpen] = useState(false);
     const [components, setComponents] = useState(gameObject.components);
 

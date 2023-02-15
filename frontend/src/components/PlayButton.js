@@ -10,7 +10,7 @@ function PlayButton({gameObjects, play, setPlay, setPlayableObjects}){
             const playObjects = await Promise.allSettled(gameObjects.map( async (gameObject) => {
                 if(gameObject.components.length === 0){
                     const deepCopy = JSON.parse(JSON.stringify(gameObject))
-                    return new GameObject(deepCopy.globalPosition, deepCopy.globalRotation, deepCopy.scale, deepCopy.shape)
+                    return new GameObject(deepCopy.globalPosition, deepCopy.globalRotation, deepCopy.scale, deepCopy.shape, gameObject.sprite)
                 }else{
                     let finalGameObject = null
                     for(const component of gameObject.components){

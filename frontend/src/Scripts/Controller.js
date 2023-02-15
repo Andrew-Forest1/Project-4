@@ -1,7 +1,9 @@
 import GameObject from "./GameObject"
 
 export function Component(gameObject){
-    return new Controller(JSON.parse(JSON.stringify(gameObject)))
+    const deepCopy = JSON.parse(JSON.stringify(gameObject))
+    deepCopy.sprite = gameObject.sprite
+    return new Controller(deepCopy)
 }
 
 export function Shallow(gameObject){
@@ -10,7 +12,7 @@ export function Shallow(gameObject){
 
 class Controller extends GameObject{
     constructor(gameObject){
-        super(gameObject.globalPosition, gameObject.globalRotation, gameObject.scale, gameObject.shape)
+        super(gameObject.globalPosition, gameObject.globalRotation, gameObject.scale, gameObject.shape, gameObject.sprite)
         this.count = 0
         this.nextObject = false
     }

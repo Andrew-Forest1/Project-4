@@ -25,13 +25,17 @@ function Canvas({props, gameObjects, setGameObjects, setSelectedGameObject, play
     const draw = (ctx, frameCount, gameObjects) => {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         gameObjects.forEach(gameObject => {
-            if(gameObject.shape === 'triangle'){
-                drawTriangle(gameObject, ctx)
-            }else if(gameObject.shape === 'rectangle'){
-                drawRectangle(gameObject, ctx)
-            }
-            else{
-                drawCircle(gameObject, ctx)
+            if(gameObject.sprite !== ""){
+                ctx.drawImage(gameObject.sprite, gameObject.globalPosition.x - gameObject.scale.w * 5, positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5), gameObject.scale.w * 10, gameObject.scale.h * 10)
+            }else{
+                if(gameObject.shape === 'triangle'){
+                    drawTriangle(gameObject, ctx)
+                }else if(gameObject.shape === 'rectangle'){
+                    drawRectangle(gameObject, ctx)
+                }
+                else{
+                    drawCircle(gameObject, ctx)
+                }
             }
         });
     }

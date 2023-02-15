@@ -1,24 +1,9 @@
 import GameObject from "./GameObject"
 
-// export function setProto(parent){
-//     const component = new Component2()
-//     Object.setPrototypeOf(parent, component)
-//     return component
-// }
-
-export function assign(parent){
-    const component = new Component2(parent)
-    const temp = component.update
-    const comp = Object.assign(component, parent)
-    comp.update = function(){
-        temp()
-        parent.update()
-    }
-    return comp
-}
-
 export function Component(gameObject){
-    return new Component2(JSON.parse(JSON.stringify(gameObject)))
+    const deepCopy = JSON.parse(JSON.stringify(gameObject))
+    deepCopy.sprite = gameObject.sprite
+    return new Component2(deepCopy)
 }
 
 export function Shallow(gameObject){
@@ -27,7 +12,7 @@ export function Shallow(gameObject){
 
 class Component2 extends GameObject{
     constructor(gameObject){
-        super(gameObject.globalPosition, gameObject.globalRotation, gameObject.scale, gameObject.shape)
+        super(gameObject.globalPosition, gameObject.globalRotation, gameObject.scale, gameObject.shape, gameObject.sprite)
         this.prop2 = "Component 2 prop"
         this.count = 0
         this.nextObject = false
@@ -41,8 +26,4 @@ class Component2 extends GameObject{
             this.nextObject.update()
         }
     }
-
-    // parentUpdate(){
-    //     this.super.update()
-    // }
 }
