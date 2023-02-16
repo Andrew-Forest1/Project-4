@@ -1,9 +1,8 @@
 import { useState } from "react"
-import AddComponent from "./AddComponent";
-import AddComponentTest from "./AddComponentTest";
+import AddAnimation from "./AddAnimation";
 import AddSprite from "./AddSprite";
 
-function Inspector({gameObject, setSelectedGO, setGameObjects, components, sprites}){
+function Inspector({gameObject, setSelectedGO, setGameObjects, animations, sprites}){
     const [updatedGO, setUpdatedGO] = useState(gameObject);
     const [editing, setEditing] = useState("");
 
@@ -77,21 +76,15 @@ function Inspector({gameObject, setSelectedGO, setGameObjects, components, sprit
         })
     }
 
-    const createNewComponent = () => {
-        //debugger
-        gameObject.componets.push('./Test.js')
-        console.log(gameObject)
-    }
-
-    if(gameObject === null) return <div/>
+    if(!gameObject) return <div/>
 
     return(
         <div className="inspector">
             <div>
                 <label htmlFor="XPosition">X-Position</label>
-                <input onBlur={handleLeave} onChange={handleChange} value={editing.xposition === undefined ? gameObject.localPosition.x : editing.xposition} type="number" name="xposition"/>
+                <input onBlur={handleLeave} onChange={handleChange} value={editing.xposition === undefined ? gameObject.globalPosition.x : editing.xposition} type="number" name="xposition"/>
                 <label htmlFor="YPosition">Y-Position</label>
-                <input onBlur={handleLeave} onChange={handleChange} value={editing.yposition === undefined ? gameObject.localPosition.y : editing.yposition} type="number" name="yposition"/>
+                <input onBlur={handleLeave} onChange={handleChange} value={editing.yposition === undefined ? gameObject.globalPosition.y : editing.yposition} type="number" name="yposition"/>
             </div>
             <div>
                 <label htmlFor="rotation">Rotation</label>
@@ -104,7 +97,7 @@ function Inspector({gameObject, setSelectedGO, setGameObjects, components, sprit
                 <input onBlur={handleLeave} onChange={handleChange} value={editing.yscale === undefined ? gameObject.scale.h : editing.yscale} type="number" name="yscale"/>
             </div>
             <br/>
-            {gameObject ? <AddComponent gameObject={gameObject} setSelectedGO={setSelectedGO} scripts={components}/> : null}
+            {gameObject ? <AddAnimation gameObject={gameObject} setSelectedGO={setSelectedGO} animations={animations}/> : null}
             {gameObject ? <AddSprite gameObject={gameObject} setSelectedGO={setSelectedGO} sprites={sprites}/> : null}
             <button onClick={handleClick}>Delete Game Object</button>
         </div>

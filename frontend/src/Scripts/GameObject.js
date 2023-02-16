@@ -6,7 +6,7 @@ class GameObject{
         this.globalRotation = rotation
         this.scale = scale
         this.selected = false
-        this.components = []
+        this.animations = []
         this.sprite = sprite
         this.shape = shape
         this.id = id

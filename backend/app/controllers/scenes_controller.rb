@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-    before_action :find_scene, only:[:show, :destroy]
+    before_action :find_scene, only:[:show, :destroy, :update]
 
     def index
         render json: Scene.all, status: :ok
@@ -7,6 +7,11 @@ class ScenesController < ApplicationController
 
     def show
         render json: @scene.game_objects, status: :ok
+    end
+
+    def update
+        @scene.update!(scene_params)
+        render json: @scene, status: :ok
     end
 
     def create
@@ -26,7 +31,7 @@ class ScenesController < ApplicationController
     end
 
     def scene_params
-        params.permit(:name, :user_id)
+        params.permit(:name, :user_id, :image)
     end
 
     # def single_scene

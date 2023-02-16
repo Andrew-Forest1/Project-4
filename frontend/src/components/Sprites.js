@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Sprites({}){
+function Sprites({setDrag}){
     const [sprites, setSprites] = useState([]);
 
     useEffect(() => {
@@ -10,9 +10,9 @@ function Sprites({}){
             setSprites(data)
         })
     }, []);
-
+    
     const displaySprites = sprites.map(sprite => {
-        return <img src={sprite.image_url} alt={sprite.name}/> 
+        return <img src={sprite.image_url} alt={sprite.name} onDragStart={() => {setDrag(sprite)}}/> 
     })
 
     return (

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_15_190316) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_16_160649) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,6 +45,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_190316) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "game_object_animations", force: :cascade do |t|
+    t.integer "game_object_id", null: false
+    t.integer "animation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["animation_id"], name: "index_game_object_animations_on_animation_id"
+    t.index ["game_object_id"], name: "index_game_object_animations_on_game_object_id"
+  end
+
   create_table "game_object_sprites", force: :cascade do |t|
     t.integer "sprite_id", null: false
     t.integer "game_object_id", null: false
@@ -72,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_190316) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "image"
     t.index ["user_id"], name: "index_scenes_on_user_id"
   end
 
@@ -95,6 +105,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_190316) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "game_object_animations", "animations", on_delete: :cascade
+  add_foreign_key "game_object_animations", "game_objects", on_delete: :cascade
   add_foreign_key "game_object_sprites", "game_objects", on_delete: :cascade
   add_foreign_key "game_object_sprites", "sprites", on_delete: :cascade
   add_foreign_key "game_objects", "scenes", on_delete: :cascade

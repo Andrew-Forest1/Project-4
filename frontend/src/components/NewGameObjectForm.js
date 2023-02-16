@@ -1,7 +1,7 @@
 import { useState } from "react"
 import GameObject from "../Scripts/GameObject";
 
-function NewGameObjectForm({setGameObjects}){
+function NewGameObjectForm({scene, setGameObjects}){
     const [newGameObject, setNewGameObject] = useState({
         xposition: 100,
         yposition: 100,
@@ -22,7 +22,7 @@ function NewGameObjectForm({setGameObjects}){
     const handleSubmit = (e) => {
         e.preventDefault()
         const newGO = {
-            scene_id: 1,
+            scene_id: window.location.pathname.split('/')[2],
             x_pos: newGameObject.xposition,
             y_pos: newGameObject.yposition,
             rotation: newGameObject.rotation,
@@ -43,14 +43,14 @@ function NewGameObjectForm({setGameObjects}){
                 resp.json()
                 .then(GO => {
                     setGameObjects(current => [...current, new GameObject({x: newGameObject.xposition, y: newGameObject.yposition}, newGameObject.rotation, {w: newGameObject.xscale, h: newGameObject.yscale}, newGameObject.shape, "", GO.id)])
-                    setNewGameObject({
-                        xposition: 100,
-                        yposition: 100,
-                        rotation: 0,
-                        xscale: 5,
-                        yscale: 5,
-                        shape: 'circle'
-                    })
+                    // setNewGameObject({
+                    //     xposition: 100,
+                    //     yposition: 100,
+                    //     rotation: 0,
+                    //     xscale: 5,
+                    //     yscale: 5,
+                    //     shape: 'circle'
+                    // })
                 })
             } else {
                 resp.json()

@@ -1,8 +1,9 @@
 import GameObject from "../Scripts/GameObject"
 
-function Scene({scene, setScenes}){
+function Scene({scene, setScenes, setRenderScene}){
     const onClickEdit = (e) => {
         window.location.href = `http://localhost:3001/scenes/${scene.id}`
+        setRenderScene(scene)
     }
 
     const onClickDelete = (e) => {
@@ -20,6 +21,7 @@ function Scene({scene, setScenes}){
     return(
         <div>
             <label>{scene.name}</label>
+            {scene.image ? <img src={scene.image} width={300}/> : null}
             <button onClick={onClickEdit}>Edit</button>
             <button onClick={onClickDelete}>Delete</button>           
         </div>

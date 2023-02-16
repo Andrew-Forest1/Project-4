@@ -13,23 +13,32 @@ function App() {
   const [message, setMessage] = useState(null);
   const [page, setPage] = useState('/login');
   const [scenes, setScenes] = useState([]);
+  const [renderScene, setRenderScene] = useState(null)
+  const [drag, setDrag] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/scenes")
     .then(resp => resp.json())
-    .then(data => setScenes(data))//setPost(data))
+    .then(data => {
+      setScenes(data)
+    })//setPost(data))
     //console.log("fetching scenes")
     }, []);
 
   //console.log(selectedGO)
   //console.log(gameObjects)
+  //console.log(renderScene)
+
+  const updateSceneImage = () => {
+    debugger
+  }
 
   return (
     <div className="App">
       {!user ?
         <Routes>
-          <Route path="/scenes/*" element={<SceneEditor user={user}/>}/>
-          <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes}/>}/>
+          <Route path="/scenes/*" onLeave={updateSceneImage} element={<SceneEditor scene={renderScene} user={user} drag={drag}/>}/>
+          <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes} setRenderScene={setRenderScene}/>}/>
           {/* <Route path="/*" element={<SceneEditor gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGO={setSelectedGO} canvasProps={canvasProps} play={play} setPlay={setPlay} playableObjects={playableObjects} setPlayableObjects={setPlayableObjects} sprites={sprites}/>}/> */}
         </Routes>
       :
@@ -41,7 +50,7 @@ function App() {
       }
       <br/>
       <UploadSprite/>
-      <Sprites/>
+      <Sprites setDrag={setDrag}/>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 class SceneSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :image
   has_one :user
   has_many :game_objects#, include: :all
   # has_many :sprites, through: :game_objects

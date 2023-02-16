@@ -1,7 +1,7 @@
 import Scene from './Scene'
 import { useState } from 'react'
 
-function Scenes({scenes, setScenes}){
+function Scenes({scenes, setScenes, setRenderScene}){
     const [newScene, setNewScene] = useState({
         user_id: 1,
         name: ''
@@ -37,7 +37,7 @@ function Scenes({scenes, setScenes}){
     const displayScenes = scenes.map(scene => {
         return (
             <div>
-                <Scene scene={scene} setScenes={setScenes} key={`Scene-${scene.id}`}/>
+                <Scene scene={scene} setScenes={setScenes} setRenderScene={setRenderScene} key={`Scene-${scene.id}`}/>
             </div>
         )
     })
