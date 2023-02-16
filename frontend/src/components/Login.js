@@ -19,11 +19,12 @@ function Login({setUser, setPage, setMessage}) {
         .then(resp => {
           if (resp.ok) {
             resp.json().then(userObj => {
-              setUser(userObj.user)
-              window.localStorage.setItem("user", JSON.stringify(userObj.user))
+              setUser(userObj)
+              console.log(`logged in as ${userObj.username}`)
+              //window.localStorage.setItem("user", JSON.stringify(userObj.user))
             })
           } else {
-            resp.json().then(messageObj => setMessage(messageObj.message))
+            resp.json().then(messageObj => alert(messageObj.errors))
           }
         })
     }

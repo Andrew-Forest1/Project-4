@@ -9,7 +9,8 @@ import Scenes from './components/Scenes'
 import Sprites from './components/Sprites';
 
 function App() {
-  const [user, setUser] = useState(JSON.parse(window.localStorage.getItem("user")));  
+  // JSON.parse(window.localStorage.getItem("user"))
+  const [user, setUser] = useState(null);  
   const [message, setMessage] = useState(null);
   const [page, setPage] = useState('/login');
   const [scenes, setScenes] = useState([]);
@@ -17,13 +18,26 @@ function App() {
   const [drag, setDrag] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/scenes")
-    .then(resp => resp.json())
-    .then(data => {
-      setScenes(data)
-    })//setPost(data))
-    //console.log("fetching scenes")
+    fetch("http://localhost:3000/authorized_user")
+    .then((res) => {
+      if(res.ok){
+        res.json()
+        .then((user) => {
+          setUser(user)
+          getScenes()
+        })
+      }
+    })
     }, []);
+
+    const getScenes = () => {
+      fetch("http://localhost:3000/scenes")
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data)
+        setScenes(data)
+      })
+    }
 
   //console.log(selectedGO)
   //console.log(gameObjects)
@@ -35,7 +49,7 @@ function App() {
 
   return (
     <div className="App">
-      {!user ?
+      {user ?
         <Routes>
           <Route path="/scenes/*" onLeave={updateSceneImage} element={<SceneEditor scene={renderScene} user={user} drag={drag}/>}/>
           <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes} setRenderScene={setRenderScene}/>}/>
@@ -49,8 +63,8 @@ function App() {
         </Routes>
       }
       <br/>
-      <UploadSprite/>
-      <Sprites setDrag={setDrag}/>
+      {/* <UploadSprite/>
+      <Sprites setDrag={setDrag}/> */}
     </div>
   );
 }

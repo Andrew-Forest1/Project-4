@@ -1,15 +1,31 @@
 class UsersController < ApplicationController
-    def login
-        user = User.find_by(name: params[:name]) #do not use .find, cause you do not want to return any info
-        if user&user.authenticate(params[:password]) #smae as user && user.authenticate(params[:password])
-            #session[:user_id] = user.id
-            render json:user, status: :ok
-        else
-            render json: {errors: "Incorrect username or password."}
-        end
-    end
+    before_action :find_user, only: [:destroy]
+    skip_before_action :authorized_user, only: [:create]
 
     def index
         render json: User.all, status: :ok
+    end
+
+    def create
+        render json: User.create!(user_params), status: :created
+    end
+
+    def show
+        render json: @user, status: :ok
+    end
+
+    def destroy
+        @user.destroy
+        head :no_content
+    end
+
+    private
+
+    def find_user
+        @user = User.find(params[:id])
+    end
+
+    def user_params
+        params.permit(:username, :password, :first_name, :last_name)
     end
 end

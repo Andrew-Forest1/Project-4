@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :sprites
   resources :users
 
-  post "/login", to: "sessions#login"
+  post "/login", to: "sessions#login" #Do I need to add /api before /login?
   delete "/logout", to: "sessions#logout"
+  get '/authorized_user', to: 'users#show'
 end
