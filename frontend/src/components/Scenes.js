@@ -36,14 +36,12 @@ function Scenes({scenes, setScenes, setRenderScene}){
 
     const displayScenes = scenes.map(scene => {
         return (
-            <div>
-                <Scene scene={scene} setScenes={setScenes} setRenderScene={setRenderScene} key={`Scene-${scene.id}`}/>
-            </div>
+            <Scene scene={scene} setScenes={setScenes} setRenderScene={setRenderScene} key={`Scene-${scene.id}`}/>
         )
     })
 
     return (
-        <div>
+        <div className='ScenesContainer'>
             {displayScenes}
             <input type="text" onChange={onChange} value={newScene.name}/>
             <button onClick={onClick}>Create New Scene</button>

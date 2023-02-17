@@ -19,11 +19,13 @@ function Scene({scene, setScenes, setRenderScene}){
     }
 
     return(
-        <div>
-            <label>{scene.name}</label>
+        <div className='SceneCard'>
+            <h2>{scene.name}</h2>
             {scene.image ? <img src={scene.image} width={300}/> : null}
-            <button onClick={onClickEdit}>Edit</button>
-            <button onClick={onClickDelete}>Delete</button>           
+            <div className="SceneButtons">
+                <button onClick={onClickEdit}>Edit</button>
+                <button onClick={onClickDelete}>Delete</button>  
+            </div>
         </div>
     )
 }

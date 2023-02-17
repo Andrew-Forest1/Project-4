@@ -60,3 +60,32 @@ export function drawRectangle(gameObject, ctx){
     ctx.lineTo(newPos.x, positionToCanvas(newPos.y));
     ctx.fill();
 }
+
+export function drawOutline(gameObject, ctx){
+    ctx.strokeStyle = "red"
+    switch (gameObject.shape) {
+        case 'circle':
+            ctx.beginPath();
+            ctx.arc(gameObject.globalPosition.x, positionToCanvas(gameObject.globalPosition.y), gameObject.scale.w * 5, degToRad(0), degToRad(360), false);
+            ctx.stroke()
+            break;
+        case 'rectangle':
+            let theta = Math.atan(gameObject.scale.h/ gameObject.scale.w)
+            const R = .5 * gameObject.scale.h * 10 / Math.sin(theta)
+            ctx.beginPath();
+            let newPos = moveToPosition(gameObject.globalPosition, R, gameObject.globalRotation + radToDeg(theta))
+            ctx.moveTo(newPos.x, positionToCanvas(newPos.y))
+            newPos = moveToPosition(gameObject.globalPosition, R, gameObject.globalRotation + radToDeg(Math.PI - theta))
+            ctx.lineTo(newPos.x, positionToCanvas(newPos.y));
+            newPos = moveToPosition(gameObject.globalPosition, R, gameObject.globalRotation + radToDeg(Math.PI + theta))
+            ctx.lineTo(newPos.x, positionToCanvas(newPos.y));
+            newPos = moveToPosition(gameObject.globalPosition, R, gameObject.globalRotation - radToDeg(theta))
+            ctx.lineTo(newPos.x, positionToCanvas(newPos.y));
+            newPos = moveToPosition(gameObject.globalPosition, R, gameObject.globalRotation + radToDeg(theta))
+            ctx.lineTo(newPos.x, positionToCanvas(newPos.y))
+            ctx.stroke()
+            break;
+        default:
+            break;
+    }
+}

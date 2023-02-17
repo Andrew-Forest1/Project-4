@@ -2,9 +2,9 @@ import React from 'react'
 import useCanvas from './useCanvas'
 import GameObject from '../Scripts/GameObject'
 import { useState } from 'react'
-import { drawTriangle, drawRectangle, drawCircle, positionToCanvas } from '../Scripts/DrawingFunctions'
+import { drawTriangle, drawRectangle, drawCircle, positionToCanvas, drawOutline } from '../Scripts/DrawingFunctions'
 
-function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGameObject, play, playableObjects, dragSprite}){  
+function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGameObject, play, playableObjects, dragSprite, showOutlines}){  
     //const [canvasRect, setCanvasRect] = useState(document.getElementsByClassName("myCanvas")[0].getBoundingClientRect()); //canvas needs to load first
     const [canvasScale, setCanvasScale] = useState({w: 500, h:500});
     const [drag, setDrag] = useState(false)
@@ -18,6 +18,7 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
         gameObjects.forEach(gameObject => {
             if(gameObject.sprite !== ""){
                 ctx.drawImage(gameObject.sprite, gameObject.globalPosition.x - gameObject.scale.w * 5, positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5), gameObject.scale.w * 10, gameObject.scale.h * 10)
+                if(showOutlines) {drawOutline(gameObject, ctx)}
             }else{
                 if(gameObject.shape === 'triangle'){
                     drawTriangle(gameObject, ctx)

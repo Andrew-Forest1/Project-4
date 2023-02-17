@@ -62,3 +62,43 @@
   font: inherit;
   cursor: pointer;
 }
+
+/* Login Sign up forms, change later */
+.form{
+  display: grid;
+  padding-top: 30px;
+}
+
+.formInput{
+  height: 300px;
+  width: 400px;
+  display: grid;
+  border: 2px solid;
+  grid-column: 2 / 3;
+  text-align: left;
+  padding: 5px;
+  background-color: white;
+  border-color: rgba(128, 128, 128, 0.494);
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.566) 3px 3px;
+}
+
+.SceneCard{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 25vw;
+  height: 30vh;
+  border: solid;
+  margin: 1%;
+  border-radius: 5%;
+}
+
+.SceneButtons{
+
+}
+
+.ScenesContainer{
+  display: -webkit-box;
+  overflow: scroll;
+}

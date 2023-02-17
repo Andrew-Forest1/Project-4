@@ -13,6 +13,7 @@ function SceneEditor({scene, user, drag}){
     const [selectedGO, setSelectedGO] = useState(null);
     const [play, setPlay] = useState(false);
     const [sprites, setSprites] = useState([]);
+    const [showOutlines, setShowOutlines] = useState(false);
     const [animations, setAnimations] = useState([{id:1, name:'Circle'}, {id:2, name:'Bob'}, {id:3, name:'Sway'}]);
     const navigate = useNavigate()
     const canvasProps = {
@@ -77,8 +78,11 @@ function SceneEditor({scene, user, drag}){
 
     return (
         <div className='editor'>
-            <NewGameObjectForm setGameObjects={setGameObjects} scene={scene}/>
-            <Canvas props={canvasProps} gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGameObject={setSelectedGO} play={play} playableObjects={playableObjects} dragSprite={drag}/>
+            <div>
+                <NewGameObjectForm setGameObjects={setGameObjects} scene={scene}/>
+                <button onClick={() => {setShowOutlines(current => !current)}}>{showOutlines ? "Hide Outlines" : "Show Outlines"}</button>
+            </div>
+            <Canvas props={canvasProps} gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGameObject={setSelectedGO} play={play} playableObjects={playableObjects} dragSprite={drag} showOutlines={showOutlines}/>
             <PlayButton gameObjects={gameObjects} play={play} setPlay={setPlay} setPlayableObjects={setPlayableObjects}/>
             <button onClick={handleSave}>Save</button>
             {selectedGO ? <Inspector gameObject={selectedGO} setSelectedGO={setSelectedGO} setGameObjects={setGameObjects} animations={animations} sprites={sprites}/> : null}

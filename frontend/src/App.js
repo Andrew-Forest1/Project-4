@@ -17,17 +17,21 @@ function App() {
   const [renderScene, setRenderScene] = useState(null)
   const [drag, setDrag] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/authorized_user")
-    .then((res) => {
-      if(res.ok){
-        res.json()
-        .then((user) => {
-          setUser(user)
-          getScenes()
-        })
-      }
-    })
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/authorized_user")
+  //   .then((res) => {
+  //     if(res.ok){
+  //       res.json()
+  //       .then((user) => {
+  //         setUser(user)
+  //         getScenes()
+  //       })
+  //     }
+  //   })
+  //   }, []);
+
+    useEffect(() => {
+        getScenes()
     }, []);
 
     const getScenes = () => {
@@ -49,7 +53,7 @@ function App() {
 
   return (
     <div className="App">
-      {user ?
+      {!user ?
         <Routes>
           <Route path="/scenes/*" onLeave={updateSceneImage} element={<SceneEditor scene={renderScene} user={user} drag={drag}/>}/>
           <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes} setRenderScene={setRenderScene}/>}/>
@@ -63,8 +67,8 @@ function App() {
         </Routes>
       }
       <br/>
-      {/* <UploadSprite/>
-      <Sprites setDrag={setDrag}/> */}
+      <UploadSprite/>
+      <Sprites setDrag={setDrag}/>
     </div>
   );
 }
