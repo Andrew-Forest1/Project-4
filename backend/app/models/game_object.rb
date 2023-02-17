@@ -8,5 +8,6 @@ class GameObject < ApplicationRecord
     has_many :animations, through: :game_object_animations
 
     validates_presence_of :x_pos, :y_pos, :rotation, :w_scale, :h_scale
+    validates :x_pos, :y_pos, :rotation, :w_scale, :h_scale, numericality: true
     validates :shape, inclusion: { in: ['rectangle', 'circle', 'triangle'], message: "%{value} is not a rectangle, circle, or triangle" }
 end

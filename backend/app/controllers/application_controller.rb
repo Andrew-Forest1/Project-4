@@ -7,6 +7,7 @@ class ApplicationController < ActionController::API
     #before_action :authorized_user
 
     def current_user
+        #binding.break
         @user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
 

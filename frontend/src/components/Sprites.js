@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 
-function Sprites({setDrag}){
+function Sprites({setDrag, user}){
     const [sprites, setSprites] = useState([]);
 
     useEffect(() => {
         fetch(`http://localhost:3000/sprites`)
         .then(resp => resp.json())
         .then(data => { 
-            setSprites(data)
+            
+            const userSprites = data.filter(sprite => sprite.user.id === user.id)
+            setSprites(userSprites)
         })
     }, []);
     

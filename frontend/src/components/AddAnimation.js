@@ -25,7 +25,7 @@ function AddComponent({gameObject, setSelectedGO, animations}){
     return (
         <div className="dropdown">
             {displayGameObjectanimations}
-            <button onClick={handleOpen}>Dropdown</button>
+            <button onClick={handleOpen}>Select Animations</button>
             {open ? (
                 <ul className="menu">
                     {displayAnimations}
