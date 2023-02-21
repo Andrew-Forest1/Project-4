@@ -16,7 +16,7 @@ function AddSprite({gameObject, setSelectedGO, sprites}){
         gameObject.sprite = img
         setSelectedGO({...gameObject})
         setOpen(!open);
-        fetch('http://localhost:3000/game_object_sprites', {
+        fetch('/game_object_sprites', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

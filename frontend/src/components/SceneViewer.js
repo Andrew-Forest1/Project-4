@@ -25,7 +25,7 @@ function SceneViewer({scene, user, drag}){
     //console.log(window.location.pathname)
 
     useEffect(() => {
-        fetch(`http://localhost:3000/scenes/${window.location.pathname.split('/')[2]}`)
+        fetch(`/scenes/${window.location.pathname.split('/')[2]}`)
         .then(resp => resp.json())
         .then(data => {
             // if(data.user.id === 1){
@@ -37,7 +37,7 @@ function SceneViewer({scene, user, drag}){
     }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/sprites`)
+        fetch(`/sprites`)
         .then(resp => resp.json())
         .then(data => { 
             setSprites(data)
@@ -63,7 +63,7 @@ function SceneViewer({scene, user, drag}){
     const handleSave = (e) => {
         const canvas = document.getElementsByClassName('myCanvas')[0]
         const newImage = {image: canvas.toDataURL()}
-        fetch(`http://localhost:3000${window.location.pathname}`, {
+        fetch(`${window.location.pathname}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

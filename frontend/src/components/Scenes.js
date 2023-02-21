@@ -1,14 +1,14 @@
 import Scene from './Scene'
 import { useState } from 'react'
 
-function Scenes({scenes, setScenes, setRenderScene}){
+function Scenes({scenes, setScenes, setRenderScene, user}){
     const [newScene, setNewScene] = useState({
-        user_id: 1,
+        user_id: user.id,
         name: ''
     });
 
     const onClick = (e) => {
-        fetch('http://localhost:3000/scenes', {
+        fetch('/scenes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,8 +43,6 @@ function Scenes({scenes, setScenes, setRenderScene}){
     return (
         <div className='ScenesContainer'>
             {displayScenes}
-            <input type="text" onChange={onChange} value={newScene.name}/>
-            <button onClick={onClick}>Create New Scene</button>
         </div>
     )
 }

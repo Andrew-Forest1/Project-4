@@ -31,7 +31,7 @@ function NewGameObjectForm({scene, setGameObjects}){
             shape: newGameObject.shape
         }
 
-        fetch('http://localhost:3000/game_objects', {
+        fetch('/game_objects', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ function NewGameObjectForm({scene, setGameObjects}){
                 <label htmlFor="shape">Shape</label>
                 <input onChange={handleChange} value={newGameObject.shape} type="text" name="shape"/>
                 <br/>
-                <button type="submit">Create New GameObject</button>
+                <button type="submit">Create New Object</button>
             </form>
         </div>
     )

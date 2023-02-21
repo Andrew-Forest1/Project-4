@@ -4,7 +4,7 @@ function Sprites({setDrag, user}){
     const [sprites, setSprites] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/sprites`)
+        fetch(`/sprites`)
         .then(resp => resp.json())
         .then(data => { 
             

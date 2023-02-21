@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     before_action :find_user, only: [:destroy]
-    #skip_before_action :authorized_user, only: [:create]
+    skip_before_action :authorized_user, only: [:create]
 
     def index
         render json: User.all, status: :ok

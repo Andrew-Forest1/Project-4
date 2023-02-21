@@ -1,6 +1,6 @@
 function Animation({animation, gameObject, setOpen}){
     const handleClick = (e) => {
-        fetch('http://localhost:3000/game_object_animations', {
+        fetch('/game_object_animations', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

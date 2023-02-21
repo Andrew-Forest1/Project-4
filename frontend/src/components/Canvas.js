@@ -17,6 +17,9 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         gameObjects.forEach(gameObject => {
             if(gameObject.sprite !== ""){
+                ctx.translate(gameObject.globalPosition.x - gameObject.scale.w * 5, positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5)) 
+                ctx.rotate(gameObject.globalRotation * Math.PI / 180)
+                ctx.translate(-1 * (gameObject.globalPosition.x - gameObject.scale.w * 5), -1 * (positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5))) 
                 ctx.drawImage(gameObject.sprite, gameObject.globalPosition.x - gameObject.scale.w * 5, positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5), gameObject.scale.w * 10, gameObject.scale.h * 10)
                 if(showOutlines) {drawOutline(gameObject, ctx)}
             }else{
@@ -57,7 +60,7 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
     const handleMouseUp = (e) => {
         if(drag){
             setSelectedGameObject({...selectedGO})
-            fetch(`http://localhost:3000/game_objects/${selectedGO.id}`, {
+            fetch(`/game_objects/${selectedGO.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -91,6 +94,7 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
 
     const handleDrop = (e) => {
         e.preventDefault()
+        //debugger
         const rect = document.getElementsByClassName("myCanvas")[0].getBoundingClientRect()
         const mousePos = {
             x: e.clientX - rect.x,
@@ -110,7 +114,7 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
             shape: "rectangle"
         }
     
-        fetch('http://localhost:3000/game_objects', {
+        fetch('/game_objects', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -121,7 +125,7 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
             if (resp.status === 201) {
                 resp.json()
                 .then(gameObject => {
-                    fetch('http://localhost:3000/game_object_sprites', {
+                    fetch('/game_object_sprites', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

@@ -7,7 +7,7 @@ function UserScene({scene, setScenes, setRenderScene}){
     }
 
     const onClickDelete = (e) => {
-        fetch(`http://localhost:3000/scenes/${scene.id}`, {
+        fetch(`/scenes/${scene.id}`, {
             method: 'DELETE'
         })
         .then(res => res.json())

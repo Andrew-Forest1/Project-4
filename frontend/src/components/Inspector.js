@@ -47,13 +47,13 @@ function Inspector({gameObject, setSelectedGO, setGameObjects, animations, sprit
         const newGO = {
             x_pos: gameObject.globalPosition.x,
             y_pos: gameObject.globalPosition.y,
-            rotation: gameObject.rotation,
+            rotation: gameObject.globalRotation,
             w_scale: gameObject.scale.w, 
             h_scale: gameObject.scale.h, 
             shape: gameObject.shape
         }
 
-        fetch(`http://localhost:3000/game_objects/${gameObject.id}`, {
+        fetch(`/game_objects/${gameObject.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ function Inspector({gameObject, setSelectedGO, setGameObjects, animations, sprit
     }
     
     const handleClick = () => {
-        fetch(`http://localhost:3000/game_objects/${gameObject.id}`, {
+        fetch(`/game_objects/${gameObject.id}`, {
             method: 'DELETE'
         })
         setSelectedGO(null)

@@ -13,33 +13,34 @@ import Navbar from './components/Navbar';
 import Logout from './components/Logout';
 
 function App() {
-  const [user, setUser] = useState(JSON.parse(window.localStorage.getItem("user")));  
+  //JSON.parse(window.localStorage.getItem("user"))
+  const [user, setUser] = useState(null);  
   const [message, setMessage] = useState(null);
   const [page, setPage] = useState('/login');
   const [scenes, setScenes] = useState([]);
   const [renderScene, setRenderScene] = useState(null)
   const [drag, setDrag] = useState(null);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/authorized_user")
-  //   .then((res) => {
-  //     if(res.ok){
-  //       res.json()
-  //       .then((user) => {
-  //         console.log(user)
-  //         setUser(user)
-  //         getScenes()
-  //       })
-  //     }
-  //   })
-  //   }, []);
-
   useEffect(() => {
-      getScenes()
-  }, []);
+    fetch("/authorized_user")
+    .then((res) => {
+      if(res.ok){
+        //debugger
+        res.json()
+        .then((user) => {
+          setUser(user)
+          getScenes()
+        })
+      }
+    })
+    }, []);
+
+  // useEffect(() => {
+  //     getScenes()
+  // }, []);
 
   const getScenes = () => {
-    fetch("http://localhost:3000/scenes")
+    fetch("/scenes")
     .then(resp => resp.json())
     .then(data => {
       //console.log(data)
@@ -62,9 +63,9 @@ function App() {
           <Routes>
             <Route path="/scenes/*" element={<SceneEditor scene={renderScene} user={user} drag={drag}/>}/>
             <Route path="/user_scenes/*" element={<SceneViewer scene={renderScene} user={user} drag={drag}/>}/>
-            <Route path="/user_scenes" element={<UserScenes scenes={userScenes} setScenes={setScenes} setRenderScene={setRenderScene}/>}/>
-            <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes} setRenderScene={setRenderScene}/>}/>
-            <Route path="/logout" element={<Logout/>}/>
+            <Route path="/user_scenes" element={<UserScenes scenes={userScenes} setScenes={setScenes} setRenderScene={setRenderScene} user={user}/>}/>
+            <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes} setRenderScene={setRenderScene} user={user}/>}/>
+            <Route path="/logout" element={<Logout setUser={setUser}/>}/>
             {/* <Route path="/*" element={<SceneEditor gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGO={setSelectedGO} canvasProps={canvasProps} play={play} setPlay={setPlay} playableObjects={playableObjects} setPlayableObjects={setPlayableObjects} sprites={sprites}/>}/> */}
           </Routes>
         </div>
@@ -75,10 +76,9 @@ function App() {
               <Route path="*" element={<Login setUser={setUser} setMessage={setMessage} setPage={setPage}/>}/>
         </Routes>
       }
-      <br/>
       {user ? 
       <>
-        <UploadSprite/>
+        <UploadSprite user={user}/>
         <Sprites setDrag={setDrag} user={user}/>
       </>
       : null}

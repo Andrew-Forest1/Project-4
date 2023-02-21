@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-function UploadSprite(){
+function UploadSprite({setSprites, user}){
     const [state, setState] = useState({
         name: '',
         private: false,
         image: null,
-        user_id: 1
+        user_id: user.id
     });
 
     const onTextChange = (e) => { 
@@ -24,7 +24,7 @@ function UploadSprite(){
         formData.append('image', state.image);
         formData.append('user_id', state.user_id);
 
-        fetch('http://127.0.0.1:3000/sprites', {
+        fetch('/sprites', {
           method: 'POST',
           body: formData
         })

@@ -21,7 +21,7 @@ function SignUp({setUser, toggleAuth, setToggleAuth, setMessage, setPage}) {
             email: newUser.Email
         }
 
-        fetch("http://localhost:3000/login", {
+        fetch("/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

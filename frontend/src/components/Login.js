@@ -9,7 +9,7 @@ function Login({setUser, setPage, setMessage}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch("http://localhost:3000/login",{
+        fetch("/login",{
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -20,8 +20,9 @@ function Login({setUser, setPage, setMessage}) {
           if (resp.ok) {
             resp.json().then(userObj => {
               setUser(userObj)
-              console.log(`logged in as ${userObj.username}`)
-              window.localStorage.setItem("user", JSON.stringify(userObj))
+              // console.log(`logged in as ${userObj.username}`)
+              // console.log(userObj)
+              //window.localStorage.setItem("user", JSON.stringify(userObj.user))
             })
           } else {
             resp.json().then(messageObj => alert(messageObj.errors))

@@ -1,14 +1,14 @@
 import UserScene from './UserScene'
 import { useState } from 'react'
 
-function UserScenes({scenes, setScenes, setRenderScene}){
+function UserScenes({scenes, setScenes, setRenderScene, user}){
     const [newScene, setNewScene] = useState({
-        user_id: 1,
+        user_id: user.id,
         name: ''
     });
 
     const onClick = (e) => {
-        fetch('http://localhost:3000/scenes', {
+        fetch('/scenes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -16,7 +16,7 @@ function UserScenes({scenes, setScenes, setRenderScene}){
             body:JSON.stringify(newScene)
         })
         .then(res =>  {
-            if(res.created){
+            if(res.status === 201){
                 res.json()
                 .then(post => {
                     setScenes(current => {
@@ -32,7 +32,7 @@ function UserScenes({scenes, setScenes, setRenderScene}){
             console.log(error)
         })
         setNewScene({
-            user_id: 1,
+            user_id: user.id,
             name: ''
         })
     }
