@@ -1,9 +1,12 @@
-import GameObject from "../Scripts/GameObject"
+import GameObject from "../../Scripts/GameObject"
+import { useNavigate } from "react-router-dom";
 
 function Scene({scene, setRenderScene}){
+    const navigate = useNavigate()
+
     const onClickEdit = (e) => {
-        window.location.href = `http://localhost:3001/user_scenes/${scene.id}`
         setRenderScene(scene)
+        navigate(`${scene.id}`)
     }
 
     return(

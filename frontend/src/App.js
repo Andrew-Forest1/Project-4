@@ -2,15 +2,15 @@ import './App.css'
 import React, { useState, useEffect } from 'react';
 import UploadSprite from './components/UploadSprite';
 import { Routes, Route } from "react-router-dom";
-import SignUp from './components/Signup'
-import Login from './components/Login';
-import SceneEditor from './components/SceneEditor';
-import SceneViewer from './components/SceneViewer';
-import UserScenes from './components/UserScenes'
-import Scenes from './components/Scenes'
+import SignUp from './components/Login-Logout/Signup'
+import Login from './components/Login-Logout/Login';
+import SceneEditor from './components/UserScenes/SceneEditorPage/SceneEditor';
+import SceneViewer from './components/PostScenes/SceneViewer';
+import UserScenes from './components/UserScenes/SceneBrowser/UserScenes'
+import Scenes from './components/PostScenes/Scenes'
 import Sprites from './components/Sprites';
 import Navbar from './components/Navbar';
-import Logout from './components/Logout';
+import Logout from './components/Login-Logout/Logout';
 
 function App() {
   //JSON.parse(window.localStorage.getItem("user"))
@@ -61,8 +61,8 @@ function App() {
         <div>
           <Navbar user={user}/>
           <Routes>
-            <Route path="/scenes/*" element={<SceneEditor scene={renderScene} user={user} drag={drag}/>}/>
-            <Route path="/user_scenes/*" element={<SceneViewer scene={renderScene} user={user} drag={drag}/>}/>
+            <Route path="/scenes/*" element={<SceneViewer scene={renderScene} user={user} drag={drag}/>}/>
+            <Route path="/user_scenes/*" element={<SceneEditor scene={renderScene} user={user} drag={drag}/>}/>
             <Route path="/user_scenes" element={<UserScenes scenes={userScenes} setScenes={setScenes} setRenderScene={setRenderScene} user={user}/>}/>
             <Route path="/scenes" element={<Scenes scenes={scenes} setScenes={setScenes} setRenderScene={setRenderScene} user={user}/>}/>
             <Route path="/logout" element={<Logout setUser={setUser}/>}/>

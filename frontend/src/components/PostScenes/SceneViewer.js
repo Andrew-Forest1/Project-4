@@ -1,13 +1,12 @@
-import Inspector from './Inspector';
-import NewGameObjectForm from './NewGameObjectForm';
-import PlayButton from './PlayButton';
+import Inspector from '../UserScenes/SceneEditorPage/Inspector';
+import NewGameObjectForm from '../UserScenes/SceneEditorPage/NewGameObjectForm';
+import PlayButton from '../PlayButton';
 import Canvas from './Canvas'
 import React, { useState, useEffect } from 'react';
-import GameObject from '../Scripts/GameObject';
-import cloud from '../cloud_shape1_1.png'
+import GameObject from '../../Scripts/GameObject';
 import { useNavigate } from 'react-router-dom';
 
-function SceneEditor({scene, user, drag}){
+function SceneViewer({scene, user, drag}){
     const [gameObjects, setGameObjects] = useState(null);
     const [playableObjects, setPlayableObjects] = useState([]);
     const [selectedGO, setSelectedGO] = useState(null);
@@ -26,7 +25,7 @@ function SceneEditor({scene, user, drag}){
     //console.log(window.location.pathname)
 
     useEffect(() => {
-        fetch(`${window.location.pathname}`)
+        fetch(`/scenes/${window.location.pathname.split('/')[2]}`)
         .then(resp => resp.json())
         .then(data => {
             // if(data.user.id === 1){
@@ -41,8 +40,7 @@ function SceneEditor({scene, user, drag}){
         fetch(`/sprites`)
         .then(resp => resp.json())
         .then(data => { 
-            const userSprites = data.filter(sprite => sprite.user.id === user.id)
-            setSprites(userSprites)
+            setSprites(data)
         })
     }, []);
 
@@ -62,33 +60,14 @@ function SceneEditor({scene, user, drag}){
         setGameObjects(newGameObjects)
     }
 
-    const handleSave = (e) => {
-        const canvas = document.getElementsByClassName('myCanvas')[0]
-        const newImage = {image: canvas.toDataURL()}
-        fetch(`${window.location.pathname}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(newImage)
-        })
-        .then(resp => resp.json())
-    }
-
     if(!gameObjects) return (<label>Loading</label>)
 
     return (
         <div className='editor'>
-            <div>
-                <NewGameObjectForm setGameObjects={setGameObjects} scene={scene}/>
-                <button onClick={() => {setShowOutlines(current => !current)}}>{showOutlines ? "Hide Outlines" : "Show Outlines"}</button>
-            </div>
             <Canvas props={canvasProps} gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGameObject={setSelectedGO} play={play} playableObjects={playableObjects} dragSprite={drag} showOutlines={showOutlines}/>
             <PlayButton gameObjects={gameObjects} play={play} setPlay={setPlay} setPlayableObjects={setPlayableObjects}/>
-            <button onClick={handleSave}>Save</button>
-            {selectedGO ? <Inspector gameObject={selectedGO} setSelectedGO={setSelectedGO} setGameObjects={setGameObjects} animations={animations} sprites={sprites}/> : null}
         </div>
     )
 }
 
-export default SceneEditor
+export default SceneViewer

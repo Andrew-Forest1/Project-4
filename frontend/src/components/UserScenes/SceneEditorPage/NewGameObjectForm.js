@@ -1,5 +1,5 @@
 import { useState } from "react"
-import GameObject from "../Scripts/GameObject";
+import GameObject from "../../../Scripts/GameObject";
 
 function NewGameObjectForm({scene, setGameObjects}){
     const [newGameObject, setNewGameObject] = useState({

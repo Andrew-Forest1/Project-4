@@ -42,7 +42,7 @@ function Inspector({gameObject, setSelectedGO, setGameObjects, animations, sprit
             default:
                 break;
         }
-        console.log(gameObject)
+        // console.log(gameObject)
 
         const newGO = {
             x_pos: gameObject.globalPosition.x,

@@ -1,19 +1,19 @@
 import Inspector from './Inspector';
 import NewGameObjectForm from './NewGameObjectForm';
-import PlayButton from './PlayButton';
+import PlayButton from '../../PlayButton';
 import Canvas from './Canvas'
 import React, { useState, useEffect } from 'react';
-import GameObject from '../Scripts/GameObject';
+import GameObject from '../../../Scripts/GameObject';
 import { useNavigate } from 'react-router-dom';
 
-function SceneViewer({scene, user, drag}){
+function SceneEditor({scene, user, drag}){
     const [gameObjects, setGameObjects] = useState(null);
     const [playableObjects, setPlayableObjects] = useState([]);
     const [selectedGO, setSelectedGO] = useState(null);
     const [play, setPlay] = useState(false);
     const [sprites, setSprites] = useState([]);
     const [showOutlines, setShowOutlines] = useState(false);
-    const [animations, setAnimations] = useState([{id:1, name:'Circle'}, {id:2, name:'Bob'}, {id:3, name:'Sway'}]);
+    const [animations, setAnimations] = useState([{id:1, name:'Circle'}, {id:2, name:'Bob'}, {id:3, name:'Sway'}, {id:4, name:'Controller'}]);
     const navigate = useNavigate()
     const canvasProps = {
         options: {
@@ -40,7 +40,8 @@ function SceneViewer({scene, user, drag}){
         fetch(`/sprites`)
         .then(resp => resp.json())
         .then(data => { 
-            setSprites(data)
+            const userSprites = data.filter(sprite => sprite.user.id === user.id)
+            setSprites(userSprites)
         })
     }, []);
 
@@ -77,10 +78,16 @@ function SceneViewer({scene, user, drag}){
 
     return (
         <div className='editor'>
+            <div>
+                <NewGameObjectForm setGameObjects={setGameObjects} scene={scene}/>
+                <button onClick={() => {setShowOutlines(current => !current)}}>{showOutlines ? "Hide Outlines" : "Show Outlines"}</button>
+            </div>
             <Canvas props={canvasProps} gameObjects={gameObjects} setGameObjects={setGameObjects} selectedGO={selectedGO} setSelectedGameObject={setSelectedGO} play={play} playableObjects={playableObjects} dragSprite={drag} showOutlines={showOutlines}/>
             <PlayButton gameObjects={gameObjects} play={play} setPlay={setPlay} setPlayableObjects={setPlayableObjects}/>
+            <button onClick={handleSave}>Save</button>
+            {selectedGO ? <Inspector gameObject={selectedGO} setSelectedGO={setSelectedGO} setGameObjects={setGameObjects} animations={animations} sprites={sprites}/> : null}
         </div>
     )
 }
 
-export default SceneViewer
+export default SceneEditor

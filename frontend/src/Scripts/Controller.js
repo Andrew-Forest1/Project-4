@@ -18,27 +18,16 @@ class Controller extends GameObject{
     }
 
     movementControls(input) {
-        if(input.type === 'keydown'){
-            switch (input.key) {
-                case 'w':
-                    this.globalPosition.y += 1
-                    break;
-    
-                case 's':
-                    this.globalPosition.y -= 1
-                    break;
-    
-                case 'a':
-                    this.globalPosition.x -= 1
-                    break;
-    
-                case 'd':
-                    this.globalPosition.x += 1
-                    break;
-            
-                default:
-                    break;
-            }
+        if(input.w){
+            this.globalPosition.y += 1
+        }else if(input.s){
+            this.globalPosition.y -= 1
+        }
+
+        if(input.d){
+            this.globalPosition.x += 1
+        }else if(input.a){
+            this.globalPosition.x -= 1
         }
     }
 

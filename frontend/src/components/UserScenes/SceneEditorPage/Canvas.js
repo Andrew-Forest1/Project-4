@@ -1,8 +1,8 @@
 import React from 'react'
-import useCanvas from './useCanvas'
-import GameObject from '../Scripts/GameObject'
+import useCanvas from '../../useCanvas'
+import GameObject from '../../../Scripts/GameObject'
 import { useState } from 'react'
-import { drawTriangle, drawRectangle, drawCircle, positionToCanvas, drawOutline } from '../Scripts/DrawingFunctions'
+import { drawTriangle, drawRectangle, drawCircle, positionToCanvas, drawOutline } from '../../../Scripts/DrawingFunctions'
 
 function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGameObject, play, playableObjects, dragSprite, showOutlines}){  
     //const [canvasRect, setCanvasRect] = useState(document.getElementsByClassName("myCanvas")[0].getBoundingClientRect()); //canvas needs to load first
@@ -17,10 +17,13 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         gameObjects.forEach(gameObject => {
             if(gameObject.sprite !== ""){
-                ctx.translate(gameObject.globalPosition.x - gameObject.scale.w * 5, positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5)) 
+                ctx.translate(gameObject.globalPosition.x, positionToCanvas(gameObject.globalPosition.y)) 
                 ctx.rotate(gameObject.globalRotation * Math.PI / 180)
-                ctx.translate(-1 * (gameObject.globalPosition.x - gameObject.scale.w * 5), -1 * (positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5))) 
+                ctx.translate(-1 * (gameObject.globalPosition.x), -1 * (positionToCanvas(gameObject.globalPosition.y))) 
                 ctx.drawImage(gameObject.sprite, gameObject.globalPosition.x - gameObject.scale.w * 5, positionToCanvas(gameObject.globalPosition.y + gameObject.scale.h * 5), gameObject.scale.w * 10, gameObject.scale.h * 10)
+                ctx.translate(gameObject.globalPosition.x, positionToCanvas(gameObject.globalPosition.y))
+                ctx.rotate(-1 * gameObject.globalRotation * Math.PI / 180)
+                ctx.translate(-1 * (gameObject.globalPosition.x), -1 * (positionToCanvas(gameObject.globalPosition.y))) 
                 if(showOutlines) {drawOutline(gameObject, ctx)}
             }else{
                 if(gameObject.shape === 'triangle'){
@@ -88,7 +91,7 @@ function Canvas({props, gameObjects, setGameObjects, selectedGO, setSelectedGame
     const update = (gameObjects) => {
         if(play){
             //debugger
-            gameObjects.forEach(object => object.update(input))
+            gameObjects.forEach(object => object.update())
         }
     }
 
